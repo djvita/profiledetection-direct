@@ -7,6 +7,74 @@
 #include "ImageUtils.h"
 using namespace std;
 
+static QImage IplImage2QImage(const IplImage *iplImage)
+{
+    int height = iplImage->height;
+    int width = iplImage->width;
+
+    if  (iplImage->depth == IPL_DEPTH_8U && iplImage->nChannels == 3)
+    {
+      const uchar *qImageBuffer = (const uchar*)iplImage->imageData;
+      QImage img(qImageBuffer, width, height, QImage::Format_RGB888);
+      return img.rgbSwapped();
+    } else if  (iplImage->depth == IPL_DEPTH_8U && iplImage->nChannels == 1){
+    const uchar *qImageBuffer = (const uchar*)iplImage->imageData;
+    QImage img(qImageBuffer, width, height, QImage::Format_Indexed8);
+
+    QVector<QRgb> colorTable;
+    for (int i = 0; i < 256; i++){
+        colorTable.push_back(qRgb(i, i, i));
+    }
+    img.setColorTable(colorTable);
+    return img;
+    }else{
+      qDebug("Image cannot be converted.");
+      return QImage();
+    }
+}
+
+static QImage*  IplImage2QImage(IplImage *iplImg)
+{
+    int h = iplImg->height;
+    int w = iplImg->width;
+    int channels = iplImg->nChannels;
+    QImage *qimg = new QImage(w, h, QImage::Format_ARGB32);
+    char *data = iplImg->imageData;
+
+    for (int y = 0; y < h; y++, data += iplImg->widthStep)
+    {
+        for (int x = 0; x < w; x++)
+        {
+            char r, g, b, a = 0;
+            if (channels == 1)
+            {
+                r = data[x * channels];
+                g = data[x * channels];
+                b = data[x * channels];
+            }
+            else if (channels == 3 || channels == 4)
+            {
+                r = data[x * channels + 2];
+                g = data[x * channels + 1];
+                b = data[x * channels];
+            }
+
+            if (channels == 4)
+            {
+                a = data[x * channels + 3];
+                qimg->setPixel(x, y, qRgba(r, g, b, a));
+            }
+            else
+            {
+                qimg->setPixel(x, y, qRgb(r, g, b));
+            }
+        }
+    }
+    return qimg;
+
+}
+
+
 // Print the label and then some text info about the IplImage properties, to LOG() for easy debugging.
 void ImageUtils::printImageInfo(const IplImage *image, const char *label)
 {
