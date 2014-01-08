@@ -443,7 +443,7 @@ void ImageUtils::setCustomGraphColor(int R, int B, int G)
 
 // Draw the graph of an array of floats into imageDst or a new image, between minV & maxV if given.
 // Remember to free the newly created image if imageDst is not given.
-IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imageDst, float minV, float maxV, int width, int height, char *graphLabel, bool showScale)
+static IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imageDst, float minV, float maxV, int width, int height, char *graphLabel, bool showScale)
 {
     int w = width;
     int h = height;
@@ -532,7 +532,7 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 
 // Draw the graph of an array of ints into imageDst or a new image, between minV & maxV if given.
 // Remember to free the newly created image if imageDst is not given.
-IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst, int minV, int maxV, int width, int height, char *graphLabel, bool showScale)
+static IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst, int minV, int maxV, int width, int height, char *graphLabel, bool showScale)
 {
     int w = width;
     int h = height;
@@ -621,7 +621,7 @@ IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst
 
 // Draw the graph of an array of uchars into imageDst or a new image, between minV & maxV if given..
 // Remember to free the newly created image if imageDst is not given.
-IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imageDst, int minV, int maxV, int width, int height, char *graphLabel, bool showScale)
+static IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imageDst, int minV, int maxV, int width, int height, char *graphLabel, bool showScale)
 {
     int w = width;
     int h = height;
@@ -715,7 +715,7 @@ void ImageUtils::showFloatGraph(const char *name, const float *arraySrc, int nAr
 {
 #ifdef USE_HIGHGUI
     // Draw the graph
-    IplImage *imageGraph = drawFloatGraph(arraySrc, nArrayLength, background, 0,0,20,20,NULL,TRUE );
+    IplImage *imageGraph = ImageUtils::drawFloatGraph(arraySrc, nArrayLength, background, 0,0,20,20,NULL,TRUE );
 
     // Display the graph into a window
     cvNamedWindow( name );
@@ -735,7 +735,7 @@ void ImageUtils::showIntGraph(const char *name, const int *arraySrc, int nArrayL
 {
 #ifdef USE_HIGHGUI
     // Draw the graph
-    IplImage *imageGraph = drawIntGraph(arraySrc, nArrayLength, background, 0,0,20,20,NULL,TRUE );
+    IplImage *imageGraph = ImageUtils::drawIntGraph(arraySrc, nArrayLength, background, 0,0,20,20,NULL,TRUE );
 
     // Display the graph into a window
     cvNamedWindow( name );
@@ -755,7 +755,7 @@ void ImageUtils::showUCharGraph(const char *name, const uchar *arraySrc, int nAr
 {
 #ifdef USE_HIGHGUI
     // Draw the graph
-    IplImage *imageGraph = drawUCharGraph(arraySrc, nArrayLength, background, 0,0,20,20,NULL,TRUE );
+    IplImage *imageGraph = ImageUtils::drawUCharGraph(arraySrc, nArrayLength, background, 0,0,20,20,NULL,TRUE );
 
     // Display the graph into a window
     cvNamedWindow( name );
