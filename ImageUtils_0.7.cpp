@@ -101,7 +101,7 @@ void ImageUtils::printImagePixels(const IplImage *image, const char *label, int 
 }
 
 // Return the number of bits in each channel of the given Mat. ie: 8, 16, 32 or 64.
-int ImageUtils::getBitDepth(const cv::Mat M)
+int getBitDepth(const cv::Mat M)
 {
     switch (CV_MAT_DEPTH(M.type())) {
         case CV_8U:
@@ -121,7 +121,7 @@ int ImageUtils::getBitDepth(const cv::Mat M)
 
 // Print the contents of a multi-channel array (using "LOG()") for easy debugging.
 // If 'maxElements' is 0, it will print the whole array. If it is -1, it will not print the array at all.
-void ImageUtils::printArray2D(const uchar *data, int cols, int rows, int channels, int depth_type, int step, int maxElements)
+void printArray2D(const uchar *data, int cols, int rows, int channels, int depth_type, int step, int maxElements)
 {
     char buff[32];
     if (data != 0 && cols > 0 && rows > 0 && channels > 0 && step > 0) {
@@ -935,7 +935,7 @@ IplImage* convertImageRGBtoHSV(const IplImage *imageRGB)
 
             // Do the conversion.
             int bH, bS, bV;
-            convertPixelRGBtoHSV_256(bR,bG,bB, bH,bS,bV);
+            ImageUtils::convertPixelRGBtoHSV_256(bR,bG,bB, bH,bS,bV);
 
             // Set the HSV pixel components
             uchar *pHSV = (uchar*)(imHSV + y*rowSizeHSV + x*3);
@@ -949,7 +949,7 @@ IplImage* convertImageRGBtoHSV(const IplImage *imageRGB)
 
 // Do the color conversion of a single pixel, from HSV to RGB using Hue values between 0 to 255, whereas OpenCV only allows Hues up to 180 instead of 255.
 // ref: "http://cs.haifa.ac.il/hagit/courses/ist/Lectures/Demos/ColorApplet2/t_convert.html"
-inline void ImageUtils::convertPixelHSVtoRGB_256(int bH, int bS, int bV, int &bR, int &bG, int &bB)
+inline void convertPixelHSVtoRGB_256(int bH, int bS, int bV, int &bR, int &bG, int &bB)
 {
     float fH, fS, fV;
     float fR, fG, fB;
@@ -1527,8 +1527,8 @@ IplImage* cropImage(const IplImage *img, const CvRect region)
 
     if (img->width <= 0 || img->height <= 0 || region.width <= 0 || region.height <= 0) {
         LOG("ERROR in cropImage(): dimensions of image or region are invalid.");
-        printRect(region, "crop region");
-        printImageInfo(img, "crop image");
+        ImageUtils::printRect(region, "crop region");
+        ImageUtils::printImageInfo(img, "crop image");
         exit(1);
     }
 
@@ -1930,26 +1930,26 @@ IplImage* blendImage(const IplImage* image1, const IplImage* image2, const IplIm
     // Make sure that image1 & image2 are RGB UCHAR images, and imageAlphaMask is an 8-bit UCHAR image.
     if (!image1 || image1->width <= 0 || image1->height <= 0 || image1->depth != 8 || image1->nChannels != 3) {
         std::cout << "Error in blendImage(): Bad parameter 'image1'." << std::endl;
-        printImageInfo(image1, "image1");
+        ImageUtils::printImageInfo(image1, "image1");
         return NULL;
     }
     if (!image2 || image2->width <= 0 || image2->height <= 0 || image2->depth != 8 || image2->nChannels != 3) {
         std::cout << "Error in blendImage(): Bad parameter 'image2'." << std::endl;
-        printImageInfo(image2, "image2");
+        ImageUtils::printImageInfo(image2, "image2");
         return NULL;
     }
     if (!imageAlphaMask || imageAlphaMask->width <= 0 || imageAlphaMask->height <= 0 || imageAlphaMask->depth != 8 || imageAlphaMask->nChannels != 1) {
         std::cout << "Error in blendImage(): Bad parameter 'imageAlphaMask'." << std::endl;
-        printImageInfo(imageAlphaMask, "imageAlphaMask");
+        ImageUtils::printImageInfo(imageAlphaMask, "imageAlphaMask");
         return NULL;
     }
     // Make sure that image1 & image2 & imageAlphaMask are all the same dimensions
     if ( (image1->width != image2->width || image1->width != imageAlphaMask->width) ||
          (image1->height != image2->height || image1->height != imageAlphaMask->height) ) {
         std::cout << "Error in blendImage(): Input images aren't the same dimensions." << std::endl;
-        printImageInfo(image1, "image1");
-        printImageInfo(image2, "image2");
-        printImageInfo(imageAlphaMask, "imageAlphaMask");
+        ImageUtils::printImageInfo(image1, "image1");
+        ImageUtils::printImageInfo(image2, "image2");
+        ImageUtils::printImageInfo(imageAlphaMask, "imageAlphaMask");
         return NULL;
     }
 
@@ -2018,7 +2018,7 @@ IplImage* blendImage(const IplImage* image1, const IplImage* image2, const IplIm
 
 
 // Save the given image to a JPG or BMP file, even if its format isn't an 8-bit image, such as a 32bit float image.
-static int ImageUtils::saveImage(const char *filename, const IplImage *image)
+int ImageUtils::saveImage(const char *filename, const IplImage *image)
 {
     int ret = -1;
 #ifdef USE_HIGHGUI
@@ -2070,7 +2070,7 @@ IplImage* convertFloatImageToUcharImage(const IplImage *srcImg)
 
 // Store a greyscale floating-point CvMat image into a BMP/JPG/GIF/PNG image,
 // since cvSaveImage() can only handle 8bit images (not 32bit float images).
-static void ImageUtils::saveFloatImage(const char *filename, const IplImage *srcImg)
+void ImageUtils::saveFloatImage(const char *filename, const IplImage *srcImg)
 {
 #ifdef USE_HIGHGUI
     //LOG("Saving Float Image '%s' (%dx%d)", filename, srcImg->width, srcImg->height);

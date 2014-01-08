@@ -88,7 +88,7 @@
 
         // Perform Object or Face Detection, looking for just 1 object (the biggest in the image).
         cv::vector<Rect> objects;
-        detectObjectsCustom(img, cascade, objects, scaledWidth, flags, minFeatureSize, searchScaleFactor, minNeighbors);
+        detectObject::detectObjectsCustom(img, cascade, objects, scaledWidth, flags, minFeatureSize, searchScaleFactor, minNeighbors);
         if (objects.size() > 0) {
             // Return the only detected object.
             largestObject = (Rect)objects.at(0);

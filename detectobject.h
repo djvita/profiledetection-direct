@@ -36,6 +36,8 @@ public:
     // Note: detectLargestObject() should be faster than detectManyObjects().
     static void detectManyObjects(const cv::Mat &img, cv::CascadeClassifier &cascade, std::vector<Rect> &objects, int scaledWidth = 320);
 
+    static void detectObjectsCustom(const Mat &img, CascadeClassifier &cascade, vector<Rect> &objects, int scaledWidth, int flags, Size minFeatureSize, float searchScaleFactor, int minNeighbors);
+
 };
 
 

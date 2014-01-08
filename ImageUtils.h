@@ -339,18 +339,18 @@ public:
     IplImage* convertFloatImageToUcharImage(const IplImage *srcImg);
 
     // Save the given image to a JPG or BMP file, even if its format isn't an 8-bit image, such as a 32bit image.
-    static int saveImage(const char *filename, const IplImage *image);
+     int saveImage(const char *filename, const IplImage *image);
 
     // Store a greyscale floating-point CvMat image into a BMP/JPG/GIF/PNG image,
     // since cvSaveImage() can only handle 8bit images (not 32bit float images).
-    static void saveFloatMat(const char *filename, const CvMat *src);
+     void saveFloatMat(const char *filename, const CvMat *src);
 
     // Store a greyscale floating-point CvMat image into a BMP/JPG/GIF/PNG image,
     // since cvSaveImage() can only handle 8bit images (not 32bit float images).
-    static void saveFloatImage(const char *filename, const IplImage *srcImg);
+     void saveFloatImage(const char *filename, const IplImage *srcImg);
 
     // Draw some text onto an image using printf() format.
-    static void drawText(IplImage *img, CvPoint position, CvScalar color, char *fmt, ...);
+     void drawText(IplImage *img, CvPoint position, CvScalar color, char *fmt, ...);
 
     // Print the label and then some text info about the IplImage properties, to LOG() for easy debugging.
     static void printImageInfo(const IplImage *image_tile, const char *label DEFAULT(0));
