@@ -5,6 +5,11 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include "ImageUtils.h"
+
+#include <QtGui/QPixmap>
+#include <QtGui/QImage>
+#include <QtGui/QPainter>
+
 using namespace std;
 
 static QImage IplImage2QImage(const IplImage *iplImage)

@@ -114,6 +114,7 @@ public:
     }
     static QImage*  IplImage2QImage(IplImage *iplImg)
     {
+        QImage *qimg = new QImage(w, h, QImage::Format_ARGB32);
         return qimg;
     }
 
