@@ -8,7 +8,7 @@
 using namespace std;
 
 // Print the label and then some text info about the IplImage properties, to LOG() for easy debugging.
-void printImageInfo(const IplImage *image, const char *label)
+void ImageUtils::printImageInfo(const IplImage *image, const char *label)
 {
     string s = "";
     char buff[1024];
@@ -31,7 +31,7 @@ void printImageInfo(const IplImage *image, const char *label)
 }
 
 // Print the pixel values of the IplImage, to LOG() for easy debugging.
-void printImagePixels(const IplImage *image, const char *label, int maxElements )
+void ImageUtils::printImagePixels(const IplImage *image, const char *label, int maxElements )
 {
     string s;
     char buff[32];
@@ -101,7 +101,7 @@ void printImagePixels(const IplImage *image, const char *label, int maxElements 
 }
 
 // Return the number of bits in each channel of the given Mat. ie: 8, 16, 32 or 64.
-int getBitDepth(const cv::Mat M)
+int ImageUtils::getBitDepth(const cv::Mat M)
 {
     switch (CV_MAT_DEPTH(M.type())) {
         case CV_8U:
@@ -121,7 +121,7 @@ int getBitDepth(const cv::Mat M)
 
 // Print the contents of a multi-channel array (using "LOG()") for easy debugging.
 // If 'maxElements' is 0, it will print the whole array. If it is -1, it will not print the array at all.
-void printArray2D(const uchar *data, int cols, int rows, int channels, int depth_type, int step, int maxElements)
+void ImageUtils::printArray2D(const uchar *data, int cols, int rows, int channels, int depth_type, int step, int maxElements)
 {
     char buff[32];
     if (data != 0 && cols > 0 && rows > 0 && channels > 0 && step > 0) {
@@ -201,7 +201,7 @@ void printArray2D(const uchar *data, int cols, int rows, int channels, int depth
 
 // Print the label and then contents of a cv::Mat from the C++ interface (using "LOG()") for easy debugging.
 // If 'maxElements' is 0, it will print the whole array. If it is -1, it will not print the array at all.
-void printMat(const cv::Mat M, const char *label, int maxElements)
+void ImageUtils::printMat(const cv::Mat M, const char *label, int maxElements)
 {
     string s;
     char buff[32];
@@ -244,14 +244,14 @@ void printMat(const cv::Mat M, const char *label, int maxElements)
 }
 
 // Print the label and info of a cv::Mat from the C++ interface (using "LOG()") for easy debugging.
-void printMatInfo(const cv::Mat M, const char *label)
+void ImageUtils::printMatInfo(const cv::Mat M, const char *label)
 {
     printMat(M, label, -1);
 }
 
 
 // Print the label and then contents of a cvMat from the C interface (using "LOG()") for easy debugging.
-void printMatrix(const CvMat *M, const char *label, int maxElements)
+void ImageUtils::printMatrix(const CvMat *M, const char *label, int maxElements)
 {
     string s;
     char buff[32];
@@ -348,7 +348,7 @@ void printMatrix(const CvMat *M, const char *label, int maxElements)
 }
 
 // Print the x & y coords of the given point. If 'label' is supplied, prints that first, and also prints a newline character on the end.
-void printPoint32f(const CvPoint2D32f pt, const char *label)
+void ImageUtils::printPoint32f(const CvPoint2D32f pt, const char *label)
 {
     if (label)
         cout << label << ": ";
@@ -358,7 +358,7 @@ void printPoint32f(const CvPoint2D32f pt, const char *label)
 }
 
 // Print the start & end coords of the given line. If 'label' is supplied, prints that first, and also prints a newline character on the end.
-void printLine(const CvPoint ptA, const CvPoint ptB, const char *label)
+void ImageUtils::printLine(const CvPoint ptA, const CvPoint ptB, const char *label)
 {
     if (label)
         cout << label << ": ";
@@ -368,7 +368,7 @@ void printLine(const CvPoint ptA, const CvPoint ptB, const char *label)
 }
 
 // Just for debugging float images & matrices.
-void printDataRange(const CvArr *src, const char *msg)
+void ImageUtils::printDataRange(const CvArr *src, const char *msg)
 {
     if (((IplImage*)src)->nChannels == 2) {  // 2-ch (Complex) input
         double min_val[2] = {0};
@@ -429,13 +429,13 @@ CvScalar getGraphColor(void)
     }
 }
 // Call 'setGraphColor()' to reset the colors that will be used for graphs.
-void setGraphColor(int index)
+void ImageUtils::setGraphColor(int index)
 {
     countGraph = index;
     usingCustomGraphColor = 0;    // dont use a custom color.
 }
 // Specify the exact color that the next graph should be drawn as.
-void setCustomGraphColor(int R, int B, int G)
+void ImageUtils::setCustomGraphColor(int R, int B, int G)
 {
     customGraphColor = CV_RGB(R, G, B);
     usingCustomGraphColor = 1;    // show that it will be used.
@@ -711,7 +711,7 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 // Display a graph of the given float array.
 // If background is provided, it will be drawn into, for combining multiple graphs using drawFloatGraph().
 // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
-void showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, int delay_ms, IplImage *background)
+void ImageUtils::showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, int delay_ms, IplImage *background)
 {
 #ifdef USE_HIGHGUI
     // Draw the graph
@@ -731,7 +731,7 @@ void showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, i
 // Display a graph of the given int array.
 // If background is provided, it will be drawn into, for combining multiple graphs using drawIntGraph().
 // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
-void showIntGraph(const char *name, const int *arraySrc, int nArrayLength, int delay_ms, IplImage *background)
+void ImageUtils::showIntGraph(const char *name, const int *arraySrc, int nArrayLength, int delay_ms, IplImage *background)
 {
 #ifdef USE_HIGHGUI
     // Draw the graph
@@ -751,7 +751,7 @@ void showIntGraph(const char *name, const int *arraySrc, int nArrayLength, int d
 // Display a graph of the given unsigned char array.
 // If background is provided, it will be drawn into, for combining multiple graphs using drawUCharGraph().
 // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
-void showUCharGraph(const char *name, const uchar *arraySrc, int nArrayLength, int delay_ms, IplImage *background)
+void ImageUtils::showUCharGraph(const char *name, const uchar *arraySrc, int nArrayLength, int delay_ms, IplImage *background)
 {
 #ifdef USE_HIGHGUI
     // Draw the graph
@@ -769,7 +769,7 @@ void showUCharGraph(const char *name, const uchar *arraySrc, int nArrayLength, i
 }
 
 // Simple helper function to easily view an image, with an optional pause.
-void showImage(const IplImage *img, int delay_ms, char *name)
+void ImageUtils::showImage(const IplImage *img, int delay_ms, char *name)
 {
 /*
 #ifdef USE_HIGHGUI
@@ -805,7 +805,7 @@ IplImage* convertImageToGreyscale(const IplImage *imageSrc)
 
 // Do the color conversion of a single pixel, from RGB to HSV using Hue values between 0 to 255, whereas OpenCV only allows Hues up to 180 instead of 255.
 // ref: "http://cs.haifa.ac.il/hagit/courses/ist/Lectures/Demos/ColorApplet2/t_convert.html"
-inline void convertPixelRGBtoHSV_256(int bR, int bG, int bB, int &bH, int &bS, int &bV)
+inline void ImageUtils::convertPixelRGBtoHSV_256(int bR, int bG, int bB, int &bH, int &bS, int &bV)
 {
     float fR, fG, fB;
     float fH, fS, fV;
@@ -949,7 +949,7 @@ IplImage* convertImageRGBtoHSV(const IplImage *imageRGB)
 
 // Do the color conversion of a single pixel, from HSV to RGB using Hue values between 0 to 255, whereas OpenCV only allows Hues up to 180 instead of 255.
 // ref: "http://cs.haifa.ac.il/hagit/courses/ist/Lectures/Demos/ColorApplet2/t_convert.html"
-inline void convertPixelHSVtoRGB_256(int bH, int bS, int bV, int &bR, int &bG, int &bB)
+inline void ImageUtils::convertPixelHSVtoRGB_256(int bH, int bS, int bV, int &bR, int &bG, int &bB)
 {
     float fH, fS, fV;
     float fR, fG, fB;
@@ -1086,7 +1086,7 @@ IplImage* convertImageHSVtoRGB(const IplImage *imageHSV)
 }
 
 // Do the color conversion of a single pixel, from RGB to HSV using Hue values between 0 to 179 just like OpenCV does, instead of Hues upto 255.
-void convertPixelRGBtoHSV_180(int bR, int bG, int bB, int &bH, int &bS, int &bV)
+void ImageUtils::convertPixelRGBtoHSV_180(int bR, int bG, int bB, int &bH, int &bS, int &bV)
 {
     // Do the conversion with Hues between 0 to 255.
     convertPixelRGBtoHSV_256(bR,bG,bB, bH,bS,bV);
@@ -1096,7 +1096,7 @@ void convertPixelRGBtoHSV_180(int bR, int bG, int bB, int &bH, int &bS, int &bV)
 }
 
 // Do the color conversion of a single pixel, from HSV to RGB using Hue values between 0 to 179 just like OpenCV does, instead of Hues upto 255.
-void convertPixelHSVtoRGB_180(int bH, int bS, int bV, int &bR, int &bG, int &bB)
+void ImageUtils::convertPixelHSVtoRGB_180(int bH, int bS, int bV, int &bR, int &bG, int &bB)
 {
     // Convert from a Hue of 180 range to 256 range.
     bH = 255 * bH / 179;
@@ -1245,7 +1245,7 @@ CvPoint2D32f scalePointAroundPointF(const CvPoint2D32f point, const CvPoint2D32f
 }
 
 // Return (p * s), to a maximum value of maxVal
-float scaleValueF(float p, float s, float maxVal)
+float ImageUtils::scaleValueF(float p, float s, float maxVal)
 {
     float r = p * s;
     if (r > maxVal)
@@ -1256,7 +1256,7 @@ float scaleValueF(float p, float s, float maxVal)
 }
 
 // Return (p * s), to a maximum value of maxVal
-int scaleValueI(int p, float s, int maxVal)
+int ImageUtils::scaleValueI(int p, float s, int maxVal)
 {
     int r = cvRound( ((float)p) * s );
     if (r > maxVal)
@@ -1268,14 +1268,14 @@ int scaleValueI(int p, float s, int maxVal)
 
 
 // Calculate the distance between the 2 given points.
-float findDistanceBetweenPointsF(const CvPoint2D32f p1, const CvPoint2D32f p2)
+float ImageUtils::findDistanceBetweenPointsF(const CvPoint2D32f p1, const CvPoint2D32f p2)
 {
     // Calc the pythagoras distance.
     float dx = (p1.x - p2.x);
     float dy = (p1.y - p2.y);
     return sqrt((float) (dx * dx + dy * dy));
 }
-float findDistanceBetweenPointsI(const CvPoint p1, const CvPoint p2)
+float ImageUtils::findDistanceBetweenPointsI(const CvPoint p1, const CvPoint p2)
 {
     // Calc the pythagoras distance.
     int dx = (p1.x - p2.x);
@@ -1284,7 +1284,7 @@ float findDistanceBetweenPointsI(const CvPoint p1, const CvPoint p2)
 }
 
 // Calculate the angle between the 2 given floating-point points (in degrees).
-float findAngleBetweenPointsF(const CvPoint2D32f p1, const CvPoint2D32f p2)
+float ImageUtils::findAngleBetweenPointsF(const CvPoint2D32f p1, const CvPoint2D32f p2)
 {
     // Calculate the angle of in-plane-rotation of the face based on the angle of the 2 eye positions.
     float dx = (float)(p2.x - p1.x);
@@ -1294,7 +1294,7 @@ float findAngleBetweenPointsF(const CvPoint2D32f p1, const CvPoint2D32f p2)
     return (radians * 180.0f / (float)CV_PI);    // convert to degrees from radians.
 }
 // Calculate the angle between the 2 given integer points (in degrees).
-float findAngleBetweenPointsI(const CvPoint p1, const CvPoint p2)
+float ImageUtils::findAngleBetweenPointsI(const CvPoint p1, const CvPoint p2)
 {
     // Calculate the angle of in-plane-rotation of the face based on the angle of the 2 eye positions.
     float dx = (float)(p2.x - p1.x);
@@ -1305,7 +1305,7 @@ float findAngleBetweenPointsI(const CvPoint p1, const CvPoint p2)
 }
 
 // Print the label and then the rect to the console for easy debugging
-void printPoint(const CvPoint pt, const char *label)
+void ImageUtils::printPoint(const CvPoint pt, const char *label)
 {
     if (label)
         std::cout << label << ": ";
@@ -1313,7 +1313,7 @@ void printPoint(const CvPoint pt, const char *label)
 }
 
 // Print the label and then the rect to the console for easy debugging
-void printPointF(const CvPoint2D32f pt, const char *label)
+void ImageUtils::printPointF(const CvPoint2D32f pt, const char *label)
 {
     if (label)
         std::cout << label << ": ";
@@ -1398,7 +1398,7 @@ CvRect offsetRectPt(const CvRect rectA, const CvPoint pt)
 }
 
 // Draw a rectangle around the given object.
-void drawRect(IplImage *img, const CvRect rect, const CvScalar color)
+void ImageUtils::drawRect(IplImage *img, const CvRect rect, const CvScalar color)
 {
     CvPoint p1, p2;
     p1.x = rect.x;
@@ -1408,7 +1408,7 @@ void drawRect(IplImage *img, const CvRect rect, const CvScalar color)
     cvRectangle(img, p1, p2, color, 1);
 }
 // Draw a filled rectangle around the given object.
-void drawRectFilled(IplImage *img, const CvRect rect, const CvScalar color)
+void ImageUtils::drawRectFilled(IplImage *img, const CvRect rect, const CvScalar color)
 {
     CvPoint p1, p2;
     p1.x = rect.x;
@@ -1419,7 +1419,7 @@ void drawRectFilled(IplImage *img, const CvRect rect, const CvScalar color)
 }
 
 // Draw a crossbar at the given position.
-void drawCross(IplImage *img, const CvPoint pt, int radius, const CvScalar color)
+void ImageUtils::drawCross(IplImage *img, const CvPoint pt, int radius, const CvScalar color)
 {
     CvPoint p1, p2, p3, p4;
     // Make sure the points are within the image
@@ -1434,7 +1434,7 @@ void drawCross(IplImage *img, const CvPoint pt, int radius, const CvScalar color
 }
 
 // Print the label and then the rect to the console for easy debugging
-void printRect(const CvRect rect, const char *label)
+void ImageUtils::printRect(const CvRect rect, const char *label)
 {
     if (label)
         std::cout << label << ": ";
@@ -2018,7 +2018,7 @@ IplImage* blendImage(const IplImage* image1, const IplImage* image2, const IplIm
 
 
 // Save the given image to a JPG or BMP file, even if its format isn't an 8-bit image, such as a 32bit float image.
-int saveImage(const char *filename, const IplImage *image)
+static int ImageUtils::saveImage(const char *filename, const IplImage *image)
 {
     int ret = -1;
 #ifdef USE_HIGHGUI
@@ -2070,7 +2070,7 @@ IplImage* convertFloatImageToUcharImage(const IplImage *srcImg)
 
 // Store a greyscale floating-point CvMat image into a BMP/JPG/GIF/PNG image,
 // since cvSaveImage() can only handle 8bit images (not 32bit float images).
-void saveFloatImage(const char *filename, const IplImage *srcImg)
+static void ImageUtils::saveFloatImage(const char *filename, const IplImage *srcImg)
 {
 #ifdef USE_HIGHGUI
     //LOG("Saving Float Image '%s' (%dx%d)", filename, srcImg->width, srcImg->height);
@@ -2087,7 +2087,7 @@ void saveFloatImage(const char *filename, const IplImage *srcImg)
 
 // Store a greyscale floating-point CvMat image into a BMP/JPG/GIF/PNG image,
 // since cvSaveImage() can only handle 8bit images (not 32bit float images).
-void saveFloatMat(const char *filename, const CvMat *srcMat)
+void ImageUtils::saveFloatMat(const char *filename, const CvMat *srcMat)
 {
     //cout << "in Saving Image(" << ((CvMat*)src)->width << "," << ((CvMat*)src)->height << ") '" << filename << "'." << endl;
     if (CV_MAT_CN(srcMat->type) != 1 || CV_MAT_DEPTH(srcMat->type) != 32) {
@@ -2116,7 +2116,7 @@ IplImage* convertMatrixToUcharImage(const CvMat *srcMat)
 
 
 // Draw some text onto an image using printf() format.
-void drawText(IplImage *img, CvPoint position, CvScalar color, char *fmt, ...)
+void ImageUtils::drawText(IplImage *img, CvPoint position, CvScalar color, char *fmt, ...)
 {
     // Write the given arguments to 'szMsg' using printf() style formatting.
     va_list marker;

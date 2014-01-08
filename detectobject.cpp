@@ -9,7 +9,7 @@
     // Search for objects such as faces in the image using the given parameters, storing the multiple cv::Rects into 'objects'.
     // Can use Haar cascades or LBP cascades for Face Detection, or even eye, mouth, or car detection.
     // Input is temporarily shrunk to 'scaledWidth' for much faster detection, since 200 is enough to find faces.
-    void detectObjectsCustom(const cv::Mat &img, cv::CascadeClassifier &cascade, std::vector<Rect> &objects, int scaledWidth, int flags, cv::Size minFeatureSize, float searchScaleFactor, int minNeighbors)
+    void detectObject::detectObjectsCustom(const cv::Mat &img, cv::CascadeClassifier &cascade, std::vector<Rect> &objects, int scaledWidth, int flags, cv::Size minFeatureSize, float searchScaleFactor, int minNeighbors)
     {
         // If the input image is not grayscale, then convert the BGR or BGRA color image to grayscale.
         cv::Mat gray;
@@ -74,7 +74,7 @@
     // Can use Haar cascades or LBP cascades for Face Detection, or even eye, mouth, or car detection.
     // Input is temporarily shrunk to 'scaledWidth' for much faster detection, since 200 is enough to find faces.
     // Note: detectLargestObject() should be faster than detectManyObjects().
-    void detectLargestObject(const Mat &img, CascadeClassifier &cascade, Rect &largestObject, int scaledWidth)
+    void detectObject::detectLargestObject(const Mat &img, CascadeClassifier &cascade, Rect &largestObject, int scaledWidth)
     {
         // Only search for just 1 object (the biggest in the image).
         int flags = CASCADE_FIND_BIGGEST_OBJECT;// | CASCADE_DO_ROUGH_SEARCH;
@@ -103,7 +103,7 @@
     // Can use Haar cascades or LBP cascades for Face Detection, or even eye, mouth, or car detection.
     // Input is temporarily shrunk to 'scaledWidth' for much faster detection, since 200 is enough to find faces.
     // Note: detectLargestObject() should be faster than detectManyObjects().
-    void detectManyObjects(const Mat &img, CascadeClassifier &cascade, vector<Rect> &objects, int scaledWidth)
+    void detectObject::detectManyObjects(const Mat &img, CascadeClassifier &cascade, vector<Rect> &objects, int scaledWidth)
     {
         // Search for many objects in the one image.
         int flags = CASCADE_SCALE_IMAGE;
@@ -117,6 +117,6 @@
         int minNeighbors = 4;
 
         // Perform Object or Face Detection, looking for many objects in the one image.
-        detectObjectsCustom(img, cascade, objects, scaledWidth, flags, minFeatureSize, searchScaleFactor, minNeighbors);
+        detectObject::detectObjectsCustom(img, cascade, objects, scaledWidth, flags, minFeatureSize, searchScaleFactor, minNeighbors);
     }
 
