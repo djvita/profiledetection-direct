@@ -1038,8 +1038,8 @@ int main(int argc, char *argv[])
     CascadeClassifier eyeCascade2;
     VideoCapture videoCapture;
 
-    cout << "WebcamFaceRec, by Shervin Emami (www.shervinemami.info), June 2012." << endl;
-    cout << "Realtime face detection + face recognition from a webcam using LBP and Eigenfaces or Fisherfaces." << endl;
+    cout << "WebcamFaceRec, by Shervin Emami (www.shervinemami.info), June 2012. MODIFIED BY VITA VIDAURRE, JAN 2014" << endl;
+    cout << "Realtime face detection + face recognition from a webcam using LBP and Eigenfaces or Fisherfaces. IN QT WIDGET" << endl;
     cout << "Compiled with OpenCV version " << CV_VERSION << endl << endl;
 
     // Load the face and 1 or 2 eye detection XML classifiers.
@@ -1071,5 +1071,6 @@ int main(int argc, char *argv[])
     recognizeAndTrainUsingWebcam(videoCapture, faceCascade, eyeCascade1, eyeCascade2);
 
     videoCapture.release();
+
     return a.exec();
 }

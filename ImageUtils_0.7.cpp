@@ -516,6 +516,7 @@ void ImageUtils::setCustomGraphColor(int R, int B, int G)
 
 // Draw the graph of an array of floats into imageDst or a new image, between minV & maxV if given.
 // Remember to free the newly created image if imageDst is not given.
+/*
 static IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imageDst, float minV, float maxV, int width, int height, char *graphLabel, bool showScale)
 {
     int w = width;
@@ -602,9 +603,11 @@ static IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImag
 
     return imageGraph;
 }
+*/
 
 // Draw the graph of an array of ints into imageDst or a new image, between minV & maxV if given.
 // Remember to free the newly created image if imageDst is not given.
+/*
 static IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst, int minV, int maxV, int width, int height, char *graphLabel, bool showScale)
 {
     int w = width;
@@ -692,8 +695,10 @@ static IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *i
     return imageGraph;
 }
 
+*/
 // Draw the graph of an array of uchars into imageDst or a new image, between minV & maxV if given..
 // Remember to free the newly created image if imageDst is not given.
+/*
 static IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imageDst, int minV, int maxV, int width, int height, char *graphLabel, bool showScale)
 {
     int w = width;
@@ -780,19 +785,25 @@ static IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImag
 
     return imageGraph;
 }
+*/
 
 // Display a graph of the given float array.
 // If background is provided, it will be drawn into, for combining multiple graphs using drawFloatGraph().
 // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
+/*
 void ImageUtils::showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, int delay_ms, IplImage *background)
 {
 #ifdef USE_HIGHGUI
     // Draw the graph
-    IplImage *imageGraph = ImageUtils::drawFloatGraph(arraySrc, nArrayLength, background, 0,0,20,20,NULL,TRUE );
 
+    IplImage *imageGraph = drawFloatGraph(arraySrc, nArrayLength, background, 0,0,20,20,NULL,TRUE );
+    //cv::Mat imgmat(imageGraph,false);
     // Display the graph into a window
     cvNamedWindow( name );
     cvShowImage( name, imageGraph );
+
+   // cvNamedWindow( name );
+   // imshow( name, imgmat );
 
     cvWaitKey( 10 );        // Note that cvWaitKey() is required for the OpenCV window to show!
     cvWaitKey( delay_ms );    // Wait longer to make sure the user has seen the graph
@@ -810,14 +821,18 @@ void ImageUtils::showIntGraph(const char *name, const int *arraySrc, int nArrayL
     // Draw the graph
     IplImage *imageGraph = ImageUtils::drawIntGraph(arraySrc, nArrayLength, background, 0,0,20,20,NULL,TRUE );
 
+    //cv::Mat imgMat(imageGraph,false);
     // Display the graph into a window
+    //cvNamedWindow( name );
+    //imshow( name, imgMat );
+
     cvNamedWindow( name );
     cvShowImage( name, imageGraph );
 
-    cvWaitKey( 10 );        // Note that cvWaitKey() is required for the OpenCV window to show!
+    cvWaitKey( 0 );        // Note that cvWaitKey() is required for the OpenCV window to show!
     cvWaitKey( delay_ms );    // Wait longer to make sure the user has seen the graph
-
     cvReleaseImage(&imageGraph);
+    //destroyWindow( name, imgMat );
 #endif
 }
 
@@ -840,7 +855,7 @@ void ImageUtils::showUCharGraph(const char *name, const uchar *arraySrc, int nAr
     cvReleaseImage(&imageGraph);
 #endif
 }
-
+*/
 // Simple helper function to easily view an image, with an optional pause.
 void ImageUtils::showImage(const IplImage *img, int delay_ms, char *name)
 {
@@ -854,6 +869,7 @@ void ImageUtils::showImage(const IplImage *img, int delay_ms, char *name)
 #endif
 */
 }
+
 
 //------------------------------------------------------------------------------
 // Color conversion functions
@@ -1022,7 +1038,7 @@ IplImage* convertImageRGBtoHSV(const IplImage *imageRGB)
 
 // Do the color conversion of a single pixel, from HSV to RGB using Hue values between 0 to 255, whereas OpenCV only allows Hues up to 180 instead of 255.
 // ref: "http://cs.haifa.ac.il/hagit/courses/ist/Lectures/Demos/ColorApplet2/t_convert.html"
-inline void convertPixelHSVtoRGB_256(int bH, int bS, int bV, int &bR, int &bG, int &bB)
+inline void ImageUtils::convertPixelHSVtoRGB_256(int bH, int bS, int bV, int &bR, int &bG, int &bB)
 {
     float fH, fS, fV;
     float fR, fG, fB;
@@ -1146,7 +1162,7 @@ IplImage* convertImageHSVtoRGB(const IplImage *imageHSV)
 
             // Do the conversion.
             int bB, bG, bR;
-            convertPixelHSVtoRGB_256(bH,bS,bV,  bR,bG,bB);
+            ImageUtils::convertPixelHSVtoRGB_256(bH,bS,bV,  bR,bG,bB);
 
             // Set the RGB pixel components. NOTE that OpenCV stores RGB pixels in B,G,R order.
             uchar *pRGB = (uchar*)(imRGB + y*rowSizeRGB + x*3);
@@ -1175,7 +1191,7 @@ void ImageUtils::convertPixelHSVtoRGB_180(int bH, int bS, int bV, int &bR, int &
     bH = 255 * bH / 179;
 
     // Do the conversion with Hues between 0 to 255.
-    convertPixelHSVtoRGB_256(bH,bS,bV,  bR,bG,bB);
+    ImageUtils::convertPixelHSVtoRGB_256(bH,bS,bV,  bR,bG,bB);
 }
 
 // Create an RGB image from the YIQ image using an approximation of NTSC conversion(ref: "YIQ" Wikipedia page).
@@ -2143,6 +2159,7 @@ IplImage* convertFloatImageToUcharImage(const IplImage *srcImg)
 
 // Store a greyscale floating-point CvMat image into a BMP/JPG/GIF/PNG image,
 // since cvSaveImage() can only handle 8bit images (not 32bit float images).
+/*
 void ImageUtils::saveFloatImage(const char *filename, const IplImage *srcImg)
 {
 #ifdef USE_HIGHGUI
@@ -2157,6 +2174,7 @@ void ImageUtils::saveFloatImage(const char *filename, const IplImage *srcImg)
     //cout << "done saveFloatImage()" << endl;
 #endif
 }
+*/
 
 // Store a greyscale floating-point CvMat image into a BMP/JPG/GIF/PNG image,
 // since cvSaveImage() can only handle 8bit images (not 32bit float images).
@@ -2204,3 +2222,4 @@ void ImageUtils::drawText(IplImage *img, CvPoint position, CvScalar color, char 
     cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 0.3,0.3, 0, 1, CV_AA);
     cvPutText(img, szMsg, position, &font, color);
 }
+

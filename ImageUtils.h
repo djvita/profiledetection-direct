@@ -108,12 +108,16 @@ extern "C"
 class ImageUtils
 {
 public:
+    IplImage *mCvImage;
+    QImage mImage;
     static QImage IplImage2QImage(const IplImage *iplImage)
     {
         return QImage();
     }
     static QImage*  IplImage2QImage(IplImage *iplImg)
     {
+        int h = iplImg->height;
+        int w = iplImg->width;
         QImage *qimg = new QImage(w, h, QImage::Format_ARGB32);
         return qimg;
     }
@@ -128,30 +132,30 @@ public:
 
     // Draw the graph of an array of floats into imageDst or a new image, between minV & maxV if given.
     // Remember to free the newly created image if imageDst is not given.
-    IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imageDst DEFAULT(0), float minV DEFAULT(0.0), float maxV DEFAULT(0.0), int width DEFAULT(0), int height DEFAULT(0), char *graphLabel DEFAULT(0), bool showScale DEFAULT(true));
+  //  IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imageDst DEFAULT(0), float minV DEFAULT(0.0), float maxV DEFAULT(0.0), int width DEFAULT(0), int height DEFAULT(0), char *graphLabel DEFAULT(0), bool showScale DEFAULT(true));
 
     // Draw the graph of an array of ints into imageDst or a new image, between minV & maxV if given.
     // Remember to free the newly created image if imageDst is not given.
-    IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst DEFAULT(0), int minV DEFAULT(0), int maxV DEFAULT(0), int width DEFAULT(0), int height DEFAULT(0), char *graphLabel DEFAULT(0), bool showScale DEFAULT(true));
+ //    IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst DEFAULT(0), int minV DEFAULT(0), int maxV DEFAULT(0), int width DEFAULT(0), int height DEFAULT(0), char *graphLabel DEFAULT(0), bool showScale DEFAULT(true));
 
     // Draw the graph of an array of uchars into imageDst or a new image, between minV & maxV if given.
     // Remember to free the newly created image if imageDst is not given.
-    IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imageDst DEFAULT(0), int minV DEFAULT(0), int maxV DEFAULT(0), int width DEFAULT(0), int height DEFAULT(0), char *graphLabel DEFAULT(0), bool showScale DEFAULT(true));
+ //   IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imageDst DEFAULT(0), int minV DEFAULT(0), int maxV DEFAULT(0), int width DEFAULT(0), int height DEFAULT(0), char *graphLabel DEFAULT(0), bool showScale DEFAULT(true));
 
     // Display a graph of the given float array.
     // If background is provided, it will be drawn into, for combining multiple graphs using drawFloatGraph().
     // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
-    static void showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, int delay_ms DEFAULT(500), IplImage *background DEFAULT(0));
+ //   static void showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, int delay_ms DEFAULT(500), IplImage *background DEFAULT(0));
 
     // Display a graph of the given int array.
     // If background is provided, it will be drawn into, for combining multiple graphs using drawIntGraph().
     // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
-    static void showIntGraph(const char *name, const int *arraySrc, int nArrayLength, int delay_ms DEFAULT(500), IplImage *background DEFAULT(0));
+ //   static void showIntGraph(const char *name, const int *arraySrc, int nArrayLength, int delay_ms DEFAULT(500), IplImage *background DEFAULT(0));
 
     // Display a graph of the given unsigned char array.
     // If background is provided, it will be drawn into, for combining multiple graphs using drawUCharGraph().
     // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
-    static void showUCharGraph(const char *name, const uchar *arraySrc, int nArrayLength, int delay_ms DEFAULT(500), IplImage *background DEFAULT(0));
+ //   static void showUCharGraph(const char *name, const uchar *arraySrc, int nArrayLength, int delay_ms DEFAULT(500), IplImage *background DEFAULT(0));
 
     // Simple helper function to easily view an image, with an optional pause.
     static void showImage(const IplImage *img, int delay_ms DEFAULT(0), char *name DEFAULT(0));
