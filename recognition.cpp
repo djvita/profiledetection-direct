@@ -50,7 +50,7 @@ cv::Mat getImageFrom1DFloatMat(const cv::Mat matrixRow, int height)
 }
 
 // Show the internal face recognition data, to help debugging.
-void showTrainingDebugData(const cv::Ptr<FaceRecognizer> model, const int faceWidth, const int faceHeight)
+void recognition::showTrainingDebugData(const cv::Ptr<FaceRecognizer> model, const int faceWidth, const int faceHeight)
 {
     try {   // Surround the OpenCV calls by a try/catch block so we don't crash if some model parameters aren't available.
 
@@ -144,7 +144,7 @@ cv::Mat reconstructFace(const cv::Ptr<cv::FaceRecognizer> model, const cv::Mat p
 
 
 // Compare two images by getting the L2 error (square-root of sum of squared error).
-double getSimilarity(const cv::Mat A, const cv::Mat B)
+double recognition::getSimilarity(const cv::Mat A, const cv::Mat B)
 {
     if (A.rows > 0 && A.rows == B.rows && A.cols > 0 && A.cols == B.cols) {
         // Calculate the L2 relative error between the 2 images.

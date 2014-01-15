@@ -43,7 +43,7 @@ Rect scaleRectFromCenter(const Rect wholeFaceRect, float scale)
 // Or if you don't want a 2nd eye detection, just pass an uninitialized CascadeClassifier.
 // Can also store the searched left & right eye regions if desired.
 
-void detectBothEyes(const Mat &face, CascadeClassifier &eyeCascade1, CascadeClassifier &eyeCascade2, Point &leftEye, Point &rightEye, Rect *searchedLeftEye, Rect *searchedRightEye)
+void preprocessFace::detectBothEyes(const Mat &face, CascadeClassifier &eyeCascade1, CascadeClassifier &eyeCascade2, Point &leftEye, Point &rightEye, Rect *searchedLeftEye, Rect *searchedRightEye)
 {
     // Skip the borders of the face, since it is usually just hair and ears, that we don't care about.
 /*
@@ -129,7 +129,7 @@ void detectBothEyes(const Mat &face, CascadeClassifier &eyeCascade1, CascadeClas
 }
 
 // Histogram Equalize seperately for the left and right sides of the face.
-void equalizeLeftAndRightHalves(Mat &faceImg)
+void preprocessFace::equalizeLeftAndRightHalves(Mat &faceImg)
 {
     // It is common that there is stronger light from one half of the face than the other. In that case,
     // if you simply did histogram equalization on the whole face then it would make one half dark and
@@ -194,7 +194,7 @@ void equalizeLeftAndRightHalves(Mat &faceImg)
 // Returns either a preprocessed face square image or NULL (ie: couldn't detect the face and 2 eyes).
 // If a face is found, it can store the rect coordinates into 'storeFaceRect' and 'storeLeftEye' & 'storeRightEye' if given,
 // and eye search regions into 'searchedLeftEye' & 'searchedRightEye' if given.
-Mat getPreprocessedFace(Mat &srcImg, int desiredFaceWidth, CascadeClassifier &faceCascade, CascadeClassifier &eyeCascade1, CascadeClassifier &eyeCascade2, bool doLeftAndRightSeparately, Rect *storeFaceRect, Point *storeLeftEye, Point *storeRightEye, Rect *searchedLeftEye, Rect *searchedRightEye)
+cv::Mat getPreprocessedFace(Mat &srcImg, int desiredFaceWidth, CascadeClassifier &faceCascade, CascadeClassifier &eyeCascade1, CascadeClassifier &eyeCascade2, bool doLeftAndRightSeparately, Rect *storeFaceRect, Point *storeLeftEye, Point *storeRightEye, Rect *searchedLeftEye, Rect *searchedRightEye)
 {
     // Use square faces.
     int desiredFaceHeight = desiredFaceWidth;
@@ -239,7 +239,7 @@ Mat getPreprocessedFace(Mat &srcImg, int desiredFaceWidth, CascadeClassifier &fa
 
         // Search for the 2 eyes at the full resolution, since eye detection needs max resolution possible!
         cv::Point leftEye, rightEye;
-        detectBothEyes(gray, eyeCascade1, eyeCascade2, leftEye, rightEye, searchedLeftEye, searchedRightEye);
+        preprocessFace::detectBothEyes(gray, eyeCascade1, eyeCascade2, leftEye, rightEye, searchedLeftEye, searchedRightEye);
 
         // Give the eye results to the caller if desired.
         if (storeLeftEye)
@@ -288,7 +288,7 @@ Mat getPreprocessedFace(Mat &srcImg, int desiredFaceWidth, CascadeClassifier &fa
             }
             else {
                 // Do it seperately for the left and right sides of the face.
-                equalizeLeftAndRightHalves(warped);
+                preprocessFace::equalizeLeftAndRightHalves(warped);
             }
             //imshow("equalized", warped);
 
