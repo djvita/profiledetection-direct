@@ -43,3 +43,4 @@ LIBS += -lopencv_legacy
 LIBS += -lopencv_flann
 LIBS += -lopencv_nonfree
 LIBS += `pkg-config opencv --libs`
+
