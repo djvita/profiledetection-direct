@@ -1,7 +1,12 @@
 #include "recognition.h"
 #include "ImageUtils.h"      // Shervin's handy OpenCV utility functions.
 
-
+#include "opencv2/opencv.hpp"
+#include "opencv2/objdetect/objdetect.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/contrib/contrib.hpp"
+#include <opencv2/core/core.hpp>
 
 // Start training from the collected faces.
 // The face recognition algorithm can be one of these and perhaps more, depending on your version of OpenCV, which must be atleast v2.4.1:

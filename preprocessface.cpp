@@ -16,6 +16,10 @@ const double FACE_ELLIPSE_H = 0.80;         // Controls how tall the face mask i
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include "opencv2/opencv.hpp"
+#include "opencv2/objdetect/objdetect.hpp"
+#include "opencv2/contrib/contrib.hpp"
+
 
 /*
 // Remove the outer border of the face, so it doesn't include the background & hair.

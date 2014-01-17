@@ -1,5 +1,33 @@
+// Include OpenCV's C++ Interface
+#include "opencv2/opencv.hpp"
+#include "opencv2/objdetect/objdetect.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/contrib/contrib.hpp"
+#include <opencv2/core/core.hpp>
+#include "cv.h"
+
+// Include the rest of our code!
+#include "detectobject.h"       // Easily detect faces or eyes (using LBP or Haar Cascades).
+#include "ImageUtils.h"      // Shervin's handy OpenCV utility functions.
 #include "mainwindow.h"
+#include "preprocessface.h"     // Easily preprocess face images, for face recognition.
+#include "recognition.h"     // Train the face recognition system and recognize a person from an image.
+
+
 #include <QApplication>
+
+#include <fstream>
+#include <sstream>
+#include <sys/time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cv.h>
+#include <time.h>
+#include <vector>
+#include <string.h>
+#include <iostream>
+
 
 // The Face Recognition algorithm can be one of these and perhaps more, depending on your version of OpenCV, which must be atleast v2.4.1:
 //    "FaceRecognizer.Eigenfaces":  Eigenfaces, also referred to as PCA (Turk and Pentland, 1991).
@@ -50,29 +78,6 @@ const bool preprocessLeftAndRightSeparately = true;   // Preprocess left & right
 bool m_debug = false;
 
 
-#include <fstream>
-#include <sstream>
-#include <sys/time.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <cv.h>
-#include <time.h>
-#include <vector>
-#include <string.h>
-#include <iostream>
-// Include OpenCV's C++ Interface
-#include "opencv2/opencv.hpp"
-#include "opencv2/objdetect/objdetect.hpp"
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/contrib/contrib.hpp"
-
-// Include the rest of our code!
-#include "detectobject.h"       // Easily detect faces or eyes (using LBP or Haar Cascades).
-#include "preprocessface.h"     // Easily preprocess face images, for face recognition.
-#include "recognition.h"     // Train the face recognition system and recognize a person from an image.
-
-#include "ImageUtils.h"      // Shervin's handy OpenCV utility functions.
 
 using namespace cv;
 using namespace std;
