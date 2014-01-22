@@ -11,6 +11,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = profiledetection-direct
 TEMPLATE = app
 
+HEADERS  += mainwindow.h \
+    detectobject.h \
+    preprocessface.h \
+    recognition.h \
+    ImageUtils.h
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -19,11 +24,7 @@ SOURCES += main.cpp\
     recognition.cpp \
     ImageUtils_0.7.cpp
 
-HEADERS  += mainwindow.h \
-    detectobject.h \
-    preprocessface.h \
-    recognition.h \
-    ImageUtils.h
+
 
 FORMS    += mainwindow.ui
 
@@ -44,3 +45,18 @@ LIBS += -lopencv_flann
 LIBS += -lopencv_nonfree
 LIBS += `pkg-config opencv --libs`
 
+#LIBS += /home/vita/Documents/qtcreator3/projects/build-profiledetection-direct-Clone_of_Desktop-Debug/recognition.o
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../../usr/local/lib/release/ -lopencv_photo
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../../usr/local/lib/debug/ -lopencv_photo
+else:unix: LIBS += -L$$PWD/../../../../../../usr/local/lib/ -lopencv_photo
+
+INCLUDEPATH += $$PWD/../../../../../../usr/local/include
+DEPENDPATH += $$PWD/../../../../../../usr/local/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../../usr/local/lib/release/ -lopencv_videostab
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../../usr/local/lib/debug/ -lopencv_videostab
+else:unix: LIBS += -L$$PWD/../../../../../../usr/local/lib/ -lopencv_videostab
+
+INCLUDEPATH += $$PWD/../../../../../../usr/local/include
+DEPENDPATH += $$PWD/../../../../../../usr/local/include
